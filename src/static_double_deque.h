@@ -1,0 +1,4 @@
+#ifndef STATIC_DOUBLE_DEQUE_H
+#define STATIC_DOUBLE_DEQUE_H
+
+#endif
