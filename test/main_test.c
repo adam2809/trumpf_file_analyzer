@@ -29,5 +29,30 @@ int main(int argc, const char *argv[]) {
   assert(static_double_deque_push_front(&queue, 6.6));
   assert(!static_double_deque_push_front(&queue, 7.7));
 
+  double value;
+  assert(static_double_deque_pop_front(&queue, &value));
+  assert(value == 6.6);
+  assert(static_double_deque_pop_front(&queue, &value));
+  assert(value == 5.5);
+  assert(static_double_deque_pop_front(&queue, &value));
+  assert(value == 4.4);
+  assert(static_double_deque_pop_front(&queue, &value));
+  assert(value == 3.3);
+
+  assert(buffer[queue.front_index] == 2.2);
+  assert(buffer[queue.back_index] == 1.1);
+
+  assert(static_double_deque_pop_front(&queue, &value));
+  assert(value == 2.2);
+
+  assert(buffer[queue.front_index] == 1.1);
+  assert(buffer[queue.back_index] == 1.1);
+
+  assert(static_double_deque_pop_front(&queue, &value));
+  assert(value == 1.1);
+  assert(queue.size == 0);
+  assert(queue.front_index == 0);
+  assert(queue.back_index == 0);
+
   printf("All tests passed!\n");
 }

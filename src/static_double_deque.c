@@ -30,3 +30,20 @@ bool static_double_deque_push_front(static_double_deque_t* queue, double value){
 
     return true;
 }
+
+bool static_double_deque_pop_front(static_double_deque_t* queue, double* value){
+    if (queue == NULL || queue->buf == NULL || value == NULL) {
+        return false;
+    }
+    if (queue->size == 0) {
+        return false; // Queue is empty
+    }
+
+    *value = queue->buf[queue->front_index];
+    if(queue->size > 1){
+        queue->front_index = (queue->front_index - 1 + queue->max_size) % queue->max_size;
+    }
+    queue->size--;
+
+    return true;
+}
