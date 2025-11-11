@@ -17,5 +17,17 @@ int main(int argc, const char *argv[]) {
   assert(queue.front_index == 0);
   assert(queue.back_index == 0);
 
+  assert(static_double_deque_push_front(&queue, 1.1));
+  assert(static_double_deque_push_front(&queue, 2.2));
+
+  assert(buffer[queue.front_index] == 2.2);
+  assert(buffer[queue.back_index] == 1.1);
+
+  assert(static_double_deque_push_front(&queue, 3.3));
+  assert(static_double_deque_push_front(&queue, 4.4));
+  assert(static_double_deque_push_front(&queue, 5.5));
+  assert(static_double_deque_push_front(&queue, 6.6));
+  assert(!static_double_deque_push_front(&queue, 7.7));
+
   printf("All tests passed!\n");
 }

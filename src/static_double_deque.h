@@ -9,6 +9,7 @@ typedef struct static_double_deque_t {
     uint16_t front_index;
     uint16_t back_index;
     uint16_t max_size;
+    uint16_t size;
     double* buf;
 } static_double_deque_t;
 
