@@ -47,3 +47,38 @@ bool static_double_deque_pop_front(static_double_deque_t* queue, double* value){
 
     return true;
 }
+
+bool static_double_deque_push_back(static_double_deque_t* queue, double value){
+    if (queue == NULL || queue->buf == NULL) {
+        return false;
+    }
+    if ((queue->back_index - 1 + queue->max_size) % queue->max_size == queue->front_index) {
+        return false; // Queue is full
+    }
+
+    if(queue->size > 0){
+        queue->back_index = (queue->back_index - 1 + queue->max_size) % queue->max_size;
+    }
+
+    queue->size++;
+    queue->buf[queue->back_index] = value;
+
+    return true;
+}
+
+bool static_double_deque_pop_back(static_double_deque_t* queue, double* value){
+    if (queue == NULL || queue->buf == NULL || value == NULL) {
+        return false;
+    }
+    if (queue->size == 0) {
+        return false; // Queue is empty
+    }
+
+    *value = queue->buf[queue->back_index];
+    if(queue->size > 1){
+        queue->back_index = (queue->back_index + 1) % queue->max_size;
+    }
+    queue->size--;
+
+    return true;
+}
