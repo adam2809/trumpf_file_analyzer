@@ -1,21 +1,27 @@
 #!/bin/bash
 
-echo "========= STARTING TESTS ========="
+echo "========= STARTING END TO END TESTS ========="
 
-../bin/trumpf_zadanie_rekrutacyjne data/simple/input.txt data/output.txt
-if cmp -s "data/simple/expected_output.txt" "data/output.txt" ; then
+OUTPUT_FILE="data/output.csv"
+
+rm -f "$OUTPUT_FILE"
+../bin/trumpf_zadanie_rekrutacyjne "$(pwd)/data/simple/input.csv" "$OUTPUT_FILE" 3
+if diff -q "$OUTPUT_FILE" "$(pwd)/data/simple/expected_output.csv" > /dev/null
+then
     echo "Simple test passed"
 else
     echo "Simple test failed"
-    exit 1
 fi
 
-../bin/trumpf_zadanie_rekrutacyjne data/extended/input.txt data/output.txt
-if cmp -s "data/extended/expected_output.txt" "data/output.txt" ; then
+rm -f "$OUTPUT_FILE"
+../bin/trumpf_zadanie_rekrutacyjne "$(pwd)/data/extended/input.csv" "$OUTPUT_FILE" 15
+if diff -q "$OUTPUT_FILE" "$(pwd)/data/extended/expected_output.csv" > /dev/null
+then
     echo "Extended test passed"
 else
     echo "Extended test failed"
-    exit 1
 fi
+
+rm -f "$OUTPUT_FILE"
 
 exit 0
