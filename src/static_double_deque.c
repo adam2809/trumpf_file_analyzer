@@ -86,3 +86,29 @@ bool static_double_deque_pop_back(static_double_deque_t* queue, double* value){
 
     return true;
 }
+
+bool static_double_deque_peek_back(static_double_deque_t* queue, double* value){
+    if(queue == NULL || value == NULL) {
+        return false;
+    }
+
+    if (queue->size == 0) {
+        return false;
+    }
+
+    *value = queue->buf[queue->back_index];
+    return true;
+}
+
+bool static_double_deque_peek_front(static_double_deque_t* queue, double* value){
+    if(queue == NULL || value == NULL) {
+        return false;
+    }
+
+    if (queue->size == 0) {
+        return false;
+    }
+
+    *value = queue->buf[queue->front_index];
+    return true;
+}

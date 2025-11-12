@@ -18,6 +18,7 @@ bool static_double_deque_push_front(static_double_deque_t* queue, double value);
 bool static_double_deque_pop_front(static_double_deque_t* queue, double* value);
 bool static_double_deque_push_back(static_double_deque_t* queue, double value);
 bool static_double_deque_pop_back(static_double_deque_t* queue, double* value);
-void print_queue(static_double_deque_t* queue);
+bool static_double_deque_peek_back(static_double_deque_t* queue, double* value);
+bool static_double_deque_peek_front(static_double_deque_t* queue, double* value);
 
 #endif
