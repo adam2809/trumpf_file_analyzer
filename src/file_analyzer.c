@@ -22,4 +22,19 @@ bool file_analyzer_init(file_analyzer_ctx_t* ctx,
 }
 
 bool file_analyzer_process_value(file_analyzer_ctx_t* ctx, double value, double* max, double* min, double* avg) {
+    if (!ctx || !max || !min || !avg) {
+        return false;
+    }
+
+    double prev;
+    double ret;
+    if(ctx->window_deque.size == ctx->window_size) {
+        static_double_deque_pop_back(&ctx->window_deque, &prev);
+        ctx->window_sum -= prev;
+    }
+        
+    static_double_deque_push_front(&ctx->window_deque, value);
+    ctx->window_sum += value;
+
+    *avg = ctx->window_sum / ctx->window_deque.size;
 }
