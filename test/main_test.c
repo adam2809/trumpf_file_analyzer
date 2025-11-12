@@ -1,5 +1,6 @@
 
 #include "static_double_deque.h"
+#include "file_analyzer.h"
 #include <stdio.h>
 #include <assert.h>
 
@@ -8,10 +9,15 @@ void test_fill_and_empty_queue_front(void);
 void test_fill_and_empty_queue_back(void);
 void test_queue_crossing_ring_buffer_seam(void);
 
+#define DOUBLE_EPSILON 0.001
+bool double_equals_close(double a, double b);
+void test_file_analyzer_simple(void);
+
 int main(int argc, const char *argv[]) {
   test_fill_and_empty_queue_front();
   test_fill_and_empty_queue_back();
   test_queue_crossing_ring_buffer_seam();
+  test_file_analyzer_simple();
 
 
   printf("All tests passed!\n");
@@ -155,4 +161,60 @@ void test_queue_crossing_ring_buffer_seam(void){
   assert(buffer[queue.back_index] == 4);
   assert(buffer[queue.front_index] == 1);
   assert(queue.size == 2);
+}
+
+bool double_equals_close(double a, double b){
+  return (a - b < DOUBLE_EPSILON) && (b - a < DOUBLE_EPSILON);
+}
+
+void test_file_analyzer_simple(void){
+  printf("Test file analyzer on simple example\n");
+
+  int window_size = 3;
+  double window_deque[window_size];
+  double max_deque[window_size];
+  double min_deque[window_size];
+
+  file_analyzer_ctx_t ctx;
+
+  assert(file_analyzer_init(
+    &ctx, 
+    &max_deque,
+    &min_deque,
+    &window_deque,
+    window_size
+  ));
+
+  double max, min, avg;
+
+  assert(file_analyzer_process_value(&ctx, 1.0, &max, &min, &avg));
+  assert(double_equals_close(avg, 1.0));
+  assert(double_equals_close(max, 1.0));
+  assert(double_equals_close(min, 1.0));
+
+  assert(file_analyzer_process_value(&ctx, 2.0, &max, &min, &avg));
+  assert(double_equals_close(avg, 1.5));
+  assert(double_equals_close(max, 2.0));
+  assert(double_equals_close(min, 1.0));
+
+  assert(file_analyzer_process_value(&ctx, 5.0, &max, &min, &avg));
+  assert(double_equals_close(avg, 2.66));
+  assert(double_equals_close(max, 5.0));
+  assert(double_equals_close(min, 1.0));
+
+  assert(file_analyzer_process_value(&ctx, 3.0, &max, &min, &avg));
+  assert(double_equals_close(avg, 3.33));
+  assert(double_equals_close(max, 5.0));
+  assert(double_equals_close(min, 2.0));
+
+  assert(file_analyzer_process_value(&ctx, 4.0, &max, &min, &avg));
+  assert(double_equals_close(avg, 4.0));
+  assert(double_equals_close(max, 5.0));
+  assert(double_equals_close(min, 3.0));
+
+  assert(file_analyzer_process_value(&ctx, 2.0, &max, &min, &avg));
+  assert(double_equals_close(avg, 2.0));
+  assert(double_equals_close(max, 4.0));
+  assert(double_equals_close(min, 2.0));
+
 }
