@@ -1,4 +1,6 @@
 #include "file_analyzer.h"
+#include <stddef.h>
+
 
 bool file_analyzer_init(file_analyzer_ctx_t* ctx, 
                         double* max_deque_buffer,
@@ -37,4 +39,23 @@ bool file_analyzer_process_value(file_analyzer_ctx_t* ctx, double value, double*
     ctx->window_sum += value;
 
     *avg = ctx->window_sum / ctx->window_deque.size;
+
+    if(static_double_deque_peek_front(&ctx->max_deque, &ret) && ret == prev) {
+        static_double_deque_pop_front(&ctx->max_deque, NULL);
+    }
+
+    while(static_double_deque_peek_back(&ctx->max_deque, &ret) && ret < value) {
+        static_double_deque_pop_back(&ctx->max_deque, NULL);
+    }
+
+    static_double_deque_push_back(&ctx->max_deque, value);
+
+    if(static_double_deque_peek_front(&ctx->max_deque, &ret)) {
+        *max = ret;
+    }else{
+        return false;
+    }
+    print_queue(&ctx->max_deque);
+
+    return true;
 }
