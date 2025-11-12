@@ -22,4 +22,13 @@ int main(int argc, const char *argv[]) {
 
   char* input_file_dir = (char *)argv[1];
   char* output_file_dir = (char *)argv[2];
+
+  file_analyzer_ctx_t ctx;
+  double max_deque_buffer[WINDOW_SIZE];
+  double min_deque_buffer[WINDOW_SIZE];
+  double window_deque_buffer[WINDOW_SIZE];
+  if(!file_analyzer_init(&ctx, max_deque_buffer, min_deque_buffer, window_deque_buffer, window_size)) {
+    printf("ERROR! Could not initialize file analyzer\n");
+    return 1;
+  }
 }
