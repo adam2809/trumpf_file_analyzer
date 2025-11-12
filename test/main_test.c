@@ -179,9 +179,9 @@ void test_file_analyzer_simple(void){
 
   assert(file_analyzer_init(
     &ctx, 
-    &max_deque,
-    &min_deque,
-    &window_deque,
+    (double*) &max_deque,
+    (double*) &min_deque,
+    (double*) &window_deque,
     window_size
   ));
 
