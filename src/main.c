@@ -31,4 +31,20 @@ int main(int argc, const char *argv[]) {
     printf("ERROR! Could not initialize file analyzer\n");
     return 1;
   }
+
+  FILE* input_file_fp = fopen(input_file_dir, "r");
+  if(input_file_fp == NULL) {
+    printf("ERROR! Could not open input file\n");
+    return 1;
+  }
+  FILE* output_file_fp = fopen(output_file_dir, "w");
+  if(output_file_fp == NULL) {
+    printf("ERROR! Could not open output file\n");
+    return 1;
+  }
+
+  char* input_line;
+  size_t input_line_len = 0;
+
+  getline(&input_line, &input_line_len,input_file_fp);
 }
