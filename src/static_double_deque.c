@@ -18,7 +18,7 @@ bool static_double_deque_push_front(static_double_deque_t* queue, double value){
         return false;
     }
     if ((queue->front_index + 1) % queue->max_size == queue->back_index) {
-        return false; // Queue is full
+        return false;
     }
 
     if(queue->size > 0){
@@ -32,14 +32,16 @@ bool static_double_deque_push_front(static_double_deque_t* queue, double value){
 }
 
 bool static_double_deque_pop_front(static_double_deque_t* queue, double* value){
-    if (queue == NULL || queue->buf == NULL || value == NULL) {
+    if (queue == NULL || queue->buf == NULL) {
         return false;
     }
     if (queue->size == 0) {
-        return false; // Queue is empty
+        return false;
     }
 
-    *value = queue->buf[queue->front_index];
+    if(value){
+        *value = queue->buf[queue->front_index];
+    }
     if(queue->size > 1){
         queue->front_index = (queue->front_index - 1 + queue->max_size) % queue->max_size;
     }
@@ -53,7 +55,7 @@ bool static_double_deque_push_back(static_double_deque_t* queue, double value){
         return false;
     }
     if ((queue->back_index - 1 + queue->max_size) % queue->max_size == queue->front_index) {
-        return false; // Queue is full
+        return false;
     }
 
     if(queue->size > 0){
@@ -67,14 +69,16 @@ bool static_double_deque_push_back(static_double_deque_t* queue, double value){
 }
 
 bool static_double_deque_pop_back(static_double_deque_t* queue, double* value){
-    if (queue == NULL || queue->buf == NULL || value == NULL) {
+    if (queue == NULL || queue->buf == NULL) {
         return false;
     }
     if (queue->size == 0) {
-        return false; // Queue is empty
+        return false;
     }
 
-    *value = queue->buf[queue->back_index];
+    if(value){
+        *value = queue->buf[queue->back_index];
+    }
     if(queue->size > 1){
         queue->back_index = (queue->back_index + 1) % queue->max_size;
     }
