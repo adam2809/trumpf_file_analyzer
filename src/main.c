@@ -1,11 +1,22 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "file_analyzer.h"
 
 #define WINDOW_SIZE 500
 #define MAX_DOUBLE_STR_LEN 24
 
+
+double my_trunc(double x) {
+    long long int_part = (long long)x;
+    
+    return (double)int_part;
+}
+
+void make_double_str(double value, char* buffer) {
+  sprintf(buffer,"%.2f", my_trunc(value * 100) / 100);
+}
 
 int main(int argc, const char *argv[]) {
   if(argc != 4) {
@@ -46,5 +57,36 @@ int main(int argc, const char *argv[]) {
   char* input_line;
   size_t input_line_len = 0;
 
+  char* output_header_line = "Wejście;Avg;Max;Min\n";
+  fwrite(output_header_line, sizeof(char), strlen(output_header_line), output_file_fp);
   getline(&input_line, &input_line_len,input_file_fp);
+
+  while(getline(&input_line, &input_line_len,input_file_fp) != -1) {
+    input_line[strcspn(input_line, "\n")] = '\0';
+    double value = strtod(input_line, &endptr);
+    if (*endptr != '\0') {
+      printf("ERROR! A sample in the input file (%s) cannot be interpreted as a number\n", input_line);
+      return 1;
+    }
+
+    double max, min, avg;
+
+    if(!file_analyzer_process_value(&ctx, value, &max, &min, &avg)) {
+      printf("ERROR! Could not process value\n");
+      return 1;
+    }
+    char output_line[MAX_DOUBLE_STR_LEN*4 + 4];
+    char value_str[MAX_DOUBLE_STR_LEN];
+    char avg_str[MAX_DOUBLE_STR_LEN];
+    char min_str[MAX_DOUBLE_STR_LEN];
+    char max_str[MAX_DOUBLE_STR_LEN];
+
+    make_double_str(value, value_str);
+    make_double_str(avg, avg_str);
+    make_double_str(min, min_str);
+    make_double_str(max, max_str);
+
+    int written_chars = snprintf(output_line, sizeof(output_line), "%s;%s;%s;%s\n",value_str ,avg_str, max_str, min_str);
+    fwrite(output_line, sizeof(char), written_chars, output_file_fp);
+  }
 }
