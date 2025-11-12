@@ -190,31 +190,30 @@ void test_file_analyzer_simple(void){
   assert(file_analyzer_process_value(&ctx, 1.0, &max, &min, &avg));
   assert(double_equals_close(avg, 1.0));
   assert(double_equals_close(max, 1.0));
-  // assert(double_equals_close(min, 1.0));
+  assert(double_equals_close(min, 1.0));
 
   assert(file_analyzer_process_value(&ctx, 2.0, &max, &min, &avg));
   assert(double_equals_close(avg, 1.5));
   assert(double_equals_close(max, 2.0));
-  // assert(double_equals_close(min, 1.0));
+  assert(double_equals_close(min, 1.0));
 
   assert(file_analyzer_process_value(&ctx, 5.0, &max, &min, &avg));
   assert(double_equals_close(avg, 2.66));
   assert(double_equals_close(max, 5.0));
-  // assert(double_equals_close(min, 1.0));
+  assert(double_equals_close(min, 1.0));
 
   assert(file_analyzer_process_value(&ctx, 3.0, &max, &min, &avg));
   assert(double_equals_close(avg, 3.33));
   assert(double_equals_close(max, 5.0));
-  // assert(double_equals_close(min, 2.0));
+  assert(double_equals_close(min, 2.0));
 
   assert(file_analyzer_process_value(&ctx, 4.0, &max, &min, &avg));
   assert(double_equals_close(avg, 4.0));
   assert(double_equals_close(max, 5.0));
-  // assert(double_equals_close(min, 3.0));
+  assert(double_equals_close(min, 3.0));
 
   assert(file_analyzer_process_value(&ctx, 2.0, &max, &min, &avg));
   assert(double_equals_close(avg, 3.0));
   assert(double_equals_close(max, 4.0));
-  // assert(double_equals_close(min, 2.0));
-
+  assert(double_equals_close(min, 2.0));
 }
