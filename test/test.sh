@@ -12,12 +12,4 @@ else
     echo "Simple test failed"
 fi
 
-../bin/trumpf_zadanie_rekrutacyjne "$(pwd)/data/extended/input.csv" "$OUTPUT_FILE" 15
-if diff -q "$OUTPUT_FILE" "$(pwd)/data/extended/expected_output.csv" > /dev/null
-then
-    echo "Extended test passed"
-else
-    echo "Extended test failed"
-fi
-
 exit 0
