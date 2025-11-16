@@ -89,4 +89,7 @@ int main(int argc, const char *argv[]) {
     int written_chars = snprintf(output_line, sizeof(output_line), "%s;%s;%s;%s\n",value_str ,avg_str, max_str, min_str);
     fwrite(output_line, sizeof(char), written_chars, output_file_fp);
   }
+
+  free(input_line);
+  fclose(input_file_fp);
 }
