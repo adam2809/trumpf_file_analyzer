@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.2)
+cmake_minimum_required(VERSION 3.12)
 project(trumpf_zadanie_rekrutacyjne)
 
 include_directories(${SOURCE_DIR})
