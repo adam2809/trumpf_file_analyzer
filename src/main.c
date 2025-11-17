@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <errno.h>
 
 #include "file_analyzer.h"
 
@@ -59,7 +60,9 @@ int main(int argc, const char *argv[]) {
 
   char* output_header_line = "Wejście;Avg;Max;Min\n";
   fwrite(output_header_line, sizeof(char), strlen(output_header_line), output_file_fp);
-  getline(&input_line, &input_line_len,input_file_fp);
+  if(getline(&input_line, &input_line_len,input_file_fp) == -1) {
+    goto exit;
+  }
 
   while(getline(&input_line, &input_line_len,input_file_fp) != -1) {
     int carrige_return_index = strcspn(input_line, "\r");
@@ -94,6 +97,22 @@ int main(int argc, const char *argv[]) {
 
     int written_chars = snprintf(output_line, sizeof(output_line), "%s;%s;%s;%s\n",value_str ,avg_str, max_str, min_str);
     fwrite(output_line, sizeof(char), written_chars, output_file_fp);
+    if(ferror(output_file_fp)) {
+      printf("ERROR! Could not write to output file\n");
+      free(input_line);
+      fclose(input_file_fp);
+      return 1;
+    }
+  }
+
+exit:
+
+  if(errno != 0) {
+    printf("ERROR! An error occurred while reading the file\n");
+    return 1;
+  }else{
+    printf("Processing completed successfully\n");
+    return 0;
   }
 
   free(input_line);
