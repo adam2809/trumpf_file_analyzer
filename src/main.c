@@ -111,6 +111,7 @@ exit:
 
   free(input_line);
   fclose(input_file_fp);
+  fclose(output_file_fp);
 }
 
 double my_trunc(double x) {
