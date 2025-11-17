@@ -9,15 +9,9 @@
 #define MAX_DOUBLE_STR_LEN 24
 
 
-double my_trunc(double x) {
-    long long int_part = (long long)x;
-    
-    return (double)int_part;
-}
-
-void make_double_str(double value, char* buffer) {
-  sprintf(buffer,"%.2f", my_trunc(value * 100) / 100);
-}
+int main(int argc, const char *argv[]);
+void make_double_str(double value, char* buffer);
+double my_trunc(double x);
 
 int main(int argc, const char *argv[]) {
   if(argc != 4) {
@@ -117,4 +111,14 @@ exit:
 
   free(input_line);
   fclose(input_file_fp);
+}
+
+double my_trunc(double x) {
+    long long int_part = (long long)x;
+    
+    return (double)int_part;
+}
+
+void make_double_str(double value, char* buffer) {
+  sprintf(buffer,"%.2f", my_trunc(value * 100) / 100);
 }
