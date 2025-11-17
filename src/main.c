@@ -54,7 +54,7 @@ int main(int argc, const char *argv[]) {
     return 1;
   }
 
-  char* input_line;
+  char* input_line = NULL;
   size_t input_line_len = 0;
 
   char* output_header_line = "Wejście;Avg;Max;Min\n";
