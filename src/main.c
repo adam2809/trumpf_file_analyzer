@@ -62,7 +62,13 @@ int main(int argc, const char *argv[]) {
   getline(&input_line, &input_line_len,input_file_fp);
 
   while(getline(&input_line, &input_line_len,input_file_fp) != -1) {
-    input_line[strcspn(input_line, "\n")] = '\0';
+    int carrige_return_index = strcspn(input_line, "\r");
+    if(carrige_return_index < strlen(input_line)) {
+      input_line[carrige_return_index] = '\0';
+    }else{
+      input_line[strcspn(input_line, "\n")] = '\0';
+    }
+
     double value = strtod(input_line, &endptr);
     if (*endptr != '\0') {
       printf("ERROR! A sample in the input file (%s) cannot be interpreted as a number\n", input_line);
